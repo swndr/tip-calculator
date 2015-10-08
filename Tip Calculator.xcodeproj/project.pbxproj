@@ -398,7 +398,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Tip Calculator/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wander.sam.Tip-Calculator";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wander.sam.tip-calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -409,7 +409,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Tip Calculator/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wander.sam.Tip-Calculator";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wander.sam.tip-calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

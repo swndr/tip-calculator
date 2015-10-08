@@ -9,7 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var tipControl: UISegmentedControl!
     
     @IBOutlet weak var billField: UITextField!
     
@@ -20,11 +21,38 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.lightGrayColor().CGColor
+        border.frame = CGRect(x: 0, y: billField.frame.size.height - width, width:  billField.frame.size.width, height: billField.frame.size.height)
+        
+        border.borderWidth = width
+        billField.layer.addSublayer(border)
+        billField.layer.masksToBounds = true
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    @IBAction func onEditingChanged(sender: AnyObject) {
+        
+        var tipPercentages = [0.18,0.2,0.22]
+        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        
+        var billAmount = NSString(string: billField.text!).doubleValue
+        var tip = billAmount * tipPercentage
+        var total = billAmount + tip
+        
+        tipLabel.text = String(format: "$%.2f", tip)
+        totalLabel.text = String(format: "$%.2f", total)
+    }
+    
+    @IBAction func onTap(sender: AnyObject) {
+        view.endEditing(true)
     }
 
 

@@ -12,11 +12,15 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tipControl: UISegmentedControl!
     
+    @IBOutlet var swipeOnBill: UISwipeGestureRecognizer!
+    
     @IBOutlet weak var billField: UITextField!
     
     @IBOutlet weak var tipLabel: UILabel!
     
     @IBOutlet weak var totalLabel: UILabel!
+
+    var billAmount = 0.0 // declared as global
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +35,8 @@ class ViewController: UIViewController {
         billField.layer.addSublayer(border)
         billField.layer.masksToBounds = true
         
+        billField.becomeFirstResponder()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +49,7 @@ class ViewController: UIViewController {
         var tipPercentages = [0.18,0.2,0.22]
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
-        var billAmount = NSString(string: billField.text!).doubleValue
+        billAmount = NSString(string: billField.text!).doubleValue
         var tip = billAmount * tipPercentage
         var total = billAmount + tip
         
@@ -52,9 +58,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onTap(sender: AnyObject) {
-        view.endEditing(true)
+        //view.endEditing(true) // keep keyboard up
     }
 
 
+    @IBAction func onSwipeLeft(sender: AnyObject) {
+        billField.text = ""
+        onEditingChanged(swipeOnBill)
+    }
+    
 }
 

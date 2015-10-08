@@ -63,10 +63,12 @@
                                 <rect key="frame" x="171" y="81" width="164" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" hint="$"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <connections>
                                     <action selector="onEditingChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="YWt-ed-0fg"/>
+                                    <outletCollection property="gestureRecognizers" destination="Tnz-Z6-d5q" appends="YES" id="rQW-sM-otz"/>
                                 </connections>
                             </textField>
                         </subviews>
@@ -79,6 +81,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="billField" destination="FZd-Vh-JwD" id="FOm-WI-M81"/>
+                        <outlet property="swipeOnBill" destination="Tnz-Z6-d5q" id="ONo-dA-5Rj"/>
                         <outlet property="tipControl" destination="lv6-2g-dDK" id="4bl-mq-w3k"/>
                         <outlet property="tipLabel" destination="eFU-yF-yrY" id="GMB-8w-661"/>
                         <outlet property="totalLabel" destination="7Ft-U2-8vv" id="pdA-x4-NRd"/>
@@ -90,6 +93,11 @@
                         <action selector="onTap:" destination="BYZ-38-t0r" id="C2g-h6-hWE"/>
                     </connections>
                 </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="Tnz-Z6-d5q">
+                    <connections>
+                        <action selector="onSwipeLeft:" destination="BYZ-38-t0r" id="0jh-TV-VQN"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="224.5" y="405.5"/>
         </scene>

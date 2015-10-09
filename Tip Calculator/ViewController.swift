@@ -45,11 +45,10 @@ class ViewController: UIViewController {
         var tipPercentages = [0.18,0.2,0.22]
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
+        // Change to switch case
         if billField.text?.characters.count > 2 {
-            print(billField.text?.characters.count)
             if billField.text?.characters.count > 3 {
-                var c = billField.text?.removeAtIndex(billField.text!.endIndex.advancedBy(-4))
-                print(c)
+                billField.text?.removeAtIndex(billField.text!.endIndex.advancedBy(-4))
             }
             if billField.text?.characters.count == 6 {
                billField.text?.removeAtIndex(billField.text!.startIndex)

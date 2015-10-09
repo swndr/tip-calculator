@@ -17,7 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var totalLabel: UILabel!
 
     var billAmount = 0.0 // declared as global
-    
+    var decimalPlaced = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -42,20 +43,35 @@ class ViewController: UIViewController {
 
     @IBAction func onEditingChanged(sender: AnyObject) {
         
-        var tipPercentages = [0.18,0.2,0.22]
+        // Why does this break the decimal thing?
+        let tipPercentages = [0.18,0.2,0.22]
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
-        // Change to switch case
-        if billField.text?.characters.count > 2 {
-            if billField.text?.characters.count > 3 {
-                billField.text?.removeAtIndex(billField.text!.endIndex.advancedBy(-4))
+        // Const char for decimal point
+        let decimal: Character = "."
+        
+        // If more than 2 digits, and haven't yet, added decimal
+        if billField.text!.characters.count > 2 {
+            if decimalPlaced == false  {
+                decimalPlaced = true
+                billField.text?.insert(decimal, atIndex: billField.text!.endIndex.advancedBy(-2))
             }
-            if billField.text?.characters.count == 6 {
-               billField.text?.removeAtIndex(billField.text!.startIndex)
+            
+            // If decimal isn't at 3rd place from end, move there
+            if let decimalPos = billField.text!.characters.indexOf(decimal) {
+                if decimalPos != billField.text!.endIndex.advancedBy(-3) {
+                    billField.text!.removeAtIndex(billField.text!.endIndex.advancedBy(-4))
+                    billField.text!.insert(decimal, atIndex: billField.text!.endIndex.advancedBy(-2))
+                }
             }
-            billField.text?.insert(".", atIndex: billField.text!.endIndex.advancedBy(-2))
+
+            // Constrain length to max 999.99
+            if billField.text!.characters.count == 7 {
+               billField.text!.removeAtIndex(billField.text!.startIndex)
+            }
         }
         
+        // Convert to double
         billAmount = NSString(string: billField.text!).doubleValue
         
         var tip = billAmount * tipPercentage
@@ -71,7 +87,9 @@ class ViewController: UIViewController {
 
 
     @IBAction func onSwipeLeft(sender: AnyObject) {
-        billField.text = ""
+        // Clear bill amount
+        billField.text!.removeAll()
+        decimalPlaced = false
         onEditingChanged(swipeOnBill)
     }
     

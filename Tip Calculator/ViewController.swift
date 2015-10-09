@@ -18,6 +18,7 @@ class ViewController: UIViewController {
 
     var billAmount = 0.0 // declared as global
     var decimalPlaced = false
+    var lastCharCount = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,8 +62,10 @@ class ViewController: UIViewController {
         // Const char for decimal point
         let decimal: Character = "."
         
-        // If more than 2 digits, and haven't yet, added decimal
-        if billField.text!.characters.count > 2 {
+        if billField.text!.characters.count < lastCharCount {
+            billField.text!.removeAll()
+            decimalPlaced = false
+        } else if billField.text!.characters.count > 2 {  // if more than 2 digits, and haven't yet, add decimal
             if decimalPlaced == false  {
                 decimalPlaced = true
                 billField.text?.insert(decimal, atIndex: billField.text!.endIndex.advancedBy(-2))
@@ -82,8 +85,15 @@ class ViewController: UIViewController {
             }
         }
         
+        lastCharCount = billField.text!.characters.count
+        
         // Convert to double
         billAmount = NSString(string: billField.text!).doubleValue
+        print(decimalPlaced)
+        if decimalPlaced == false {
+            billAmount = billAmount/100
+            print(billAmount)
+        }
         
         var tip = billAmount * tipPercentage
         var total = billAmount + tip

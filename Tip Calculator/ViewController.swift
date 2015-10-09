@@ -11,13 +11,9 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var tipControl: UISegmentedControl!
-    
     @IBOutlet var swipeOnBill: UISwipeGestureRecognizer!
-    
     @IBOutlet weak var billField: UITextField!
-    
     @IBOutlet weak var tipLabel: UILabel!
-    
     @IBOutlet weak var totalLabel: UILabel!
 
     var billAmount = 0.0 // declared as global
@@ -30,11 +26,11 @@ class ViewController: UIViewController {
         let width = CGFloat(1.0)
         border.borderColor = UIColor.lightGrayColor().CGColor
         border.frame = CGRect(x: 0, y: billField.frame.size.height - width, width:  billField.frame.size.width, height: billField.frame.size.height)
-        
         border.borderWidth = width
         billField.layer.addSublayer(border)
         billField.layer.masksToBounds = true
         
+        // Open keyboard on launch
         billField.becomeFirstResponder()
         
     }
@@ -49,7 +45,20 @@ class ViewController: UIViewController {
         var tipPercentages = [0.18,0.2,0.22]
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
+        if billField.text?.characters.count > 2 {
+            print(billField.text?.characters.count)
+            if billField.text?.characters.count > 3 {
+                var c = billField.text?.removeAtIndex(billField.text!.endIndex.advancedBy(-4))
+                print(c)
+            }
+            if billField.text?.characters.count == 6 {
+               billField.text?.removeAtIndex(billField.text!.startIndex)
+            }
+            billField.text?.insert(".", atIndex: billField.text!.endIndex.advancedBy(-2))
+        }
+        
         billAmount = NSString(string: billField.text!).doubleValue
+        
         var tip = billAmount * tipPercentage
         var total = billAmount + tip
         

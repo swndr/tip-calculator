@@ -55,7 +55,6 @@ class ViewController: UIViewController {
         let locale = NSLocale.currentLocale()
         let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol)
         
-        // Why does this break the decimal thing?
         let tipPercentages = [0.18,0.2,0.22]
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         

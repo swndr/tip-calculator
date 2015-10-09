@@ -34,6 +34,13 @@ class ViewController: UIViewController {
         // Open keyboard on launch
         billField.becomeFirstResponder()
         
+        // Set to local currency
+        let locale = NSLocale.currentLocale()
+        let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol)
+        billField.placeholder = "\(currencySymbol!)"
+        tipLabel.text = "\(currencySymbol!)"
+        totalLabel.text = "\(currencySymbol!)"
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,6 +49,10 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onEditingChanged(sender: AnyObject) {
+        
+        // Set to local currency
+        let locale = NSLocale.currentLocale()
+        let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol)
         
         // Why does this break the decimal thing?
         let tipPercentages = [0.18,0.2,0.22]
@@ -77,8 +88,8 @@ class ViewController: UIViewController {
         var tip = billAmount * tipPercentage
         var total = billAmount + tip
         
-        tipLabel.text = String(format: "$%.2f", tip)
-        totalLabel.text = String(format: "$%.2f", total)
+        tipLabel.text = String(format: "\(currencySymbol!) %.2f", tip)
+        totalLabel.text = String(format: "\(currencySymbol!) %.2f", total)
     }
     
     @IBAction func onTap(sender: AnyObject) {

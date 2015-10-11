@@ -10,11 +10,12 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var tipControl: UISegmentedControl!
+    @IBOutlet weak var tipSlider: UISlider!
     @IBOutlet var swipeOnBill: UISwipeGestureRecognizer!
     @IBOutlet weak var billField: UITextField!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
+    @IBOutlet weak var tipPercentageLabel: UILabel!
 
     var billAmount = 0.0 // declared as global so can access in onSwipeLeft()
     var decimalPlaced = false // if digits entered < 2
@@ -35,6 +36,10 @@ class ViewController: UIViewController {
         // Open keyboard on launch
         billField.becomeFirstResponder()
         
+        // Initial tip %
+        var sliderValue = Int(self.tipSlider.value)
+        tipPercentageLabel.text = "Tip @ \(sliderValue)%"
+        
         // Set to local currency
         let locale = NSLocale.currentLocale()
         let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol)
@@ -51,12 +56,14 @@ class ViewController: UIViewController {
 
     @IBAction func onEditingChanged(sender: AnyObject) {
         
+        // Cast slider value
+        var sliderValue = Int(self.tipSlider.value)
+        // Display tip %
+        tipPercentageLabel.text = "Tip @ \(sliderValue)%"
+        
         // Set to local currency
         let locale = NSLocale.currentLocale()
         let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol)
-        
-        let tipPercentages = [0.18,0.2,0.22]
-        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
         // Const char for decimal point
         let decimal: Character = "."
@@ -95,7 +102,7 @@ class ViewController: UIViewController {
             billAmount = billAmount/100
         }
         
-        var tip = billAmount * tipPercentage
+        var tip = billAmount * (Double(sliderValue)/100)
         var total = billAmount + tip
         
         tipLabel.text = String(format: "\(currencySymbol!) %.2f", tip)

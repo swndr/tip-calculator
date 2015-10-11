@@ -16,14 +16,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
 
-    var billAmount = 0.0 // declared as global
-    var decimalPlaced = false
+    var billAmount = 0.0 // declared as global so can access in onSwipeLeft()
+    var decimalPlaced = false // if digits entered < 2
     var lastCharCount = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
+
+        // Graphically underline text field
         let border = CALayer()
         let width = CGFloat(1.0)
         border.borderColor = UIColor.lightGrayColor().CGColor
@@ -60,11 +60,14 @@ class ViewController: UIViewController {
         
         // Const char for decimal point
         let decimal: Character = "."
+        // Number of digits entered
+        var digitsCount = billField.text!.characters.count
         
-        if billField.text!.characters.count < lastCharCount {
+        // If backspaced, delete all
+        if digitsCount < lastCharCount {
             billField.text!.removeAll()
             decimalPlaced = false
-        } else if billField.text!.characters.count > 2 {  // if more than 2 digits, and haven't yet, add decimal
+        } else if digitsCount > 2 {  // if more than 2 digits, and haven't yet, add decimal
             if decimalPlaced == false  {
                 decimalPlaced = true
                 billField.text?.insert(decimal, atIndex: billField.text!.endIndex.advancedBy(-2))
@@ -79,19 +82,17 @@ class ViewController: UIViewController {
             }
 
             // Constrain length to max 999.99
-            if billField.text!.characters.count == 7 {
+            if digitsCount == 7 {
                billField.text!.removeAtIndex(billField.text!.startIndex)
             }
         }
         
-        lastCharCount = billField.text!.characters.count
+        lastCharCount = digitsCount
         
         // Convert to double
         billAmount = NSString(string: billField.text!).doubleValue
-        print(decimalPlaced)
         if decimalPlaced == false {
             billAmount = billAmount/100
-            print(billAmount)
         }
         
         var tip = billAmount * tipPercentage
@@ -102,7 +103,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onTap(sender: AnyObject) {
-        //view.endEditing(true) // keep keyboard up
+        //view.endEditing(true) // commented out to keep keyboard up permanently
     }
 
 

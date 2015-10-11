@@ -10,3 +10,5 @@ I built all the functionality in the video, then amended / added as follows:
 * Added gesture so you can swipe across bill amount to clear all.
 * I look for device's local currency and change symbol accordingly (though I had a scope issue leading to some undesirable duplication).
 * Added app icon and did some basic styling.
+
+![](http://s20.postimg.org/hv89eu63h/Tips_Demo.gif)
